@@ -1,7 +1,5 @@
 libcperm - Create secure permutations from cryptologic ciphers.
-
-Description
-===========
+===============================================================
 libcperm is a library for creating permutations from cryptologic block ciphers. A block cipher is
 by definition a permutation over the set of possible inputs. Most block ciphers have limited number
 of block sizes, which are typically powers of two. Often times, permutations with much smaller ranges
@@ -26,21 +24,21 @@ Example
 Below is a simple C program that creates a permutation with 100 objects and prints out the each of the
 objects in the permuted order.
 
-#include <stdio.h>
-#include "perm.h"
+  #include <stdio.h>
+  #include "perm.h"
 
-#define SIZE 100
+  #define SIZE 100
 
-int main() {
-struct perm_t* perm = perm_create(SIZE, PERM_MODE_PREFIX, PERM_CIPHER_RC5, key, 32);
-uint32_t value, count = 0;
+  int main() {
+    struct perm_t* perm = perm_create(SIZE, PERM_MODE_PREFIX, PERM_CIPHER_RC5, key, 32);
+    uint32_t value, count = 0;
 
-while(PERM_END != perm_next(perm, &value)) {
-printf("perm[%u] = %u\n", count, value);
-count++;
-}
+    while(PERM_END != perm_next(perm, &value)) {
+      printf("perm[%u] = %u\n", count, value);
+      count++;
+    }
 
-perm_destroy(perm);
+    perm_destroy(perm);
 
-return 0;
-}
+    return 0;
+  }
