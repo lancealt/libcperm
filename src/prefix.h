@@ -24,7 +24,7 @@
 #define PREFIX_H
 
 #include <stdint.h>
-#include "perm.h"
+#include "cperm.h"
 
 struct prefix_element {
 	uint32_t pt;

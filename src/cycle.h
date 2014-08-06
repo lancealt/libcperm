@@ -24,7 +24,7 @@
 #define CYCLE_H
 
 #include <stdint.h>
-#include "perm.h"
+#include "cperm.h"
 
 struct cycle_data_t {
 	uint32_t next;

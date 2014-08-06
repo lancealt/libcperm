@@ -24,7 +24,7 @@
 #define PERM_INTERNAL_H
 /* Internal libperm header. Not to be included by programs using the library. */
 #include <stdint.h>
-#include "perm.h"
+#include "cperm.h"
 
 /* Permutation mode and cipher function definitions */
 typedef int (*ModeCreateFunc)(struct cperm_t*);
