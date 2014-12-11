@@ -1,10 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-#include "perm.h"
+#include "cperm.h"
 
 int main() {
-	struct perm_t* perm;
+	struct cperm_t* perm;
 	uint8_t key[16] = { 0 };
 	uint32_t out;
 	int count = 0;
@@ -13,18 +13,18 @@ int main() {
 	fread(key, 1, 16, fd);
 	fclose(fd);
 
-	perm = perm_create(100, PERM_MODE_PREFIX, PERM_CIPHER_RC5, key, 16);
+	perm = cperm_create(100, PERM_MODE_PREFIX, PERM_CIPHER_RC5, key, 16);
 	if(perm == NULL) {
 		fprintf(stderr, "Failed to create permutation! Error Code: %d\n",
-				perm_get_last_error());
+				cperm_get_last_error());
 	}
 
-	while(PERM_END != perm_next(perm, &out)) {
+	while(PERM_END != cperm_next(perm, &out)) {
 		fprintf(stdout, "%08u => %08u\n", count, out);
 		count++;
 	}
 
-	perm_destroy(perm);
+	cperm_destroy(perm);
 
 	return 0;
 }
