@@ -1,5 +1,5 @@
 AC_INIT([libcperm], [0.1])
-AM_INIT_AUTOMAKE([foreign -Wall no-define])
+AM_INIT_AUTOMAKE([foreign -Wall no-define subdir-objects])
 AC_CONFIG_SRCDIR([configure.ac])
 AM_PROG_AR
 
