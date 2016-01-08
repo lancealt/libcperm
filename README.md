@@ -30,12 +30,14 @@ objects in the permuted order.
     #include "cperm.h"
 
     #define SIZE 100
+    #define KEYLEN 16
 
     int main() {
-      struct cperm_t* cperm = cperm_create(SIZE, PERM_MODE_PREFIX, PERM_CIPHER_RC5, key, 32);
+      uint8_t key[KEYLEN] = { 0 };
+      struct cperm_t* perm = cperm_create(SIZE, PERM_MODE_PREFIX, PERM_CIPHER_RC5, key, KEYLEN);
       uint32_t value, count = 0;
 
-      while(PERM_END != cperm_next(cperm, &value)) {
+      while(PERM_END != cperm_next(perm, &value)) {
         printf("perm[%u] = %u\n", count, value);
         count++;
       }
