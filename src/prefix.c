@@ -51,7 +51,7 @@ int perm_prefix_create(struct cperm_t* perm) {
 	}
 
 	for(uint32_t i = 0; i < perm->range; i++) {
-		perm_rc5_enc(perm, i, &vect[i].ct);
+		perm->cipher->enc(perm, i, &vect[i].ct);
 		vect[i].pt = i;
 	}
 
