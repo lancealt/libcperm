@@ -3,7 +3,7 @@ AM_INIT_AUTOMAKE([foreign -Wall no-define subdir-objects])
 AC_CONFIG_SRCDIR([configure.ac])
 AM_PROG_AR
 
-CFLAGS="-std=c99"
+CFLAGS="-std=c99 -O3"
 
 LT_INIT([dlopen shared disable-static])
 
