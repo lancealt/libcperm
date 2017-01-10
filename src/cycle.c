@@ -56,7 +56,7 @@ int perm_cycle_next(struct cperm_t* perm, uint32_t* ct) {
 	}
 
 	do {
-		perm_rc5_enc(perm, cycle_data->next, ct);
+		perm->cipher->enc(perm, cycle_data->next, ct);
 		cycle_data->next++;
 	}while(*ct >= perm->range);
 
