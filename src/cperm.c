@@ -45,7 +45,7 @@ static struct ModeFuncs available_modes[] = {
 /* List of available ciphers. Each cipher has an identifier, and four functions. See CipherFuncs struct for description of the fields. */
 static struct CipherFuncs available_ciphers[] = {
 	{ PERM_CIPHER_RC5,		perm_rc5_create,	perm_rc5_enc,		perm_rc5_dec,		perm_rc5_destroy },
-	{ PERM_CIPHER_SPECK,	perm_speck_create,	perm_speck_enc,		perm_speck_dec,		perm_speck_destroy },
+	{ PERM_CIPHER_SPECK,		perm_speck_create,	perm_speck_enc,		perm_speck_dec,		perm_speck_destroy },
 	{ PERM_CIPHER_ERROR,		NULL,			NULL },
 };
 
@@ -82,11 +82,6 @@ struct cperm_t* cperm_create(uint32_t range, PermMode m, PermCipher a, uint8_t* 
 		}
 		cf++;
 	}
-	if(perm->mode == NULL) {
-		free(perm);
-		cperm_errno = PERM_ERROR_MODE_NOT_SUPP;
-		return NULL;
-	}
 
 	/* Set the cipher key */
 	cperm_set_key(perm, key, key_len);
@@ -117,8 +112,6 @@ int cperm_set_key(struct cperm_t* perm, const unsigned char* key, uint16_t lengt
 	perm->key = malloc(length);
 	memcpy(perm->key, key, length);
 	perm->key_len = length;
-
-	perm->cipher->create(perm);
 
 	return 0;
 }

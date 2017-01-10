@@ -26,7 +26,6 @@
 #include "cperm.h"
 #include "cperm-internal.h"
 #include "cycle.h"
-#include "ciphers/rc5.h"
 
 int perm_cycle_create(struct cperm_t* perm) {
 	struct cycle_data_t* cycle_data = malloc(sizeof(*cycle_data));

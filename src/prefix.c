@@ -26,7 +26,6 @@
 #include "cperm.h"
 #include "cperm-internal.h"
 #include "prefix.h"
-#include "ciphers/rc5.h"
 
 static int prefix_element_sort(const void* a, const void* b) {
 	const struct prefix_element* ea = a;
