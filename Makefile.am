@@ -5,5 +5,6 @@ libcperm_la_SOURCES = \
 				src/prefix.c \
 				src/cycle.c \
 				src/ciphers/rc5.c \
-				src/ciphers/rc5-16.c
+				src/ciphers/rc5-16.c \
+				src/ciphers/speck.c 
 include_HEADERS = src/cperm.h

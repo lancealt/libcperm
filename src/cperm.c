@@ -31,19 +31,21 @@
 #include "prefix.h"
 #include "cycle.h"
 #include "ciphers/rc5.h"
+#include "ciphers/speck.h"
 
 int cperm_errno = 0;
 
-/* List of available cpermutation modes. Each mode has an indentifier, and four functions. See ModFuncs struct for description of the fields. */
+/* List of available cpermutation modes. Each mode has an identifier, and four functions. See ModeFuncs struct for description of the fields. */
 static struct ModeFuncs available_modes[] = {
 	{ PERM_MODE_PREFIX,		perm_prefix_create,	perm_prefix_next,	perm_prefix_get,	perm_prefix_destroy },
 	{ PERM_MODE_CYCLE,		perm_cycle_create,	perm_cycle_next,	perm_cycle_get,		perm_cycle_destroy },
 	{ PERM_MODE_ERROR,		NULL,					NULL }
 };
 
-/* List of available ciphers. Each cipher has an indentifier, and four functions. See ModeFuncs struct for description of the fields. */
+/* List of available ciphers. Each cipher has an identifier, and four functions. See CipherFuncs struct for description of the fields. */
 static struct CipherFuncs available_ciphers[] = {
 	{ PERM_CIPHER_RC5,		perm_rc5_create,	perm_rc5_enc,		perm_rc5_dec,		perm_rc5_destroy },
+	{ PERM_CIPHER_SPECK,	perm_speck_create,	perm_speck_enc,		perm_speck_dec,		perm_speck_destroy },
 	{ PERM_CIPHER_ERROR,		NULL,			NULL },
 };
 

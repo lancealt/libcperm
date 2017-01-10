@@ -14,9 +14,11 @@ int main() {
 	fclose(fd);
 
 	perm = cperm_create(100, PERM_MODE_PREFIX, PERM_CIPHER_RC5, key, 16);
+//	perm = cperm_create(100, PERM_MODE_PREFIX, PERM_CIPHER_SPECK, key, 8);
 	if(perm == NULL) {
 		fprintf(stderr, "Failed to create permutation! Error Code: %d\n",
 				cperm_get_last_error());
+		return -1;
 	}
 
 	while(PERM_END != cperm_next(perm, &out)) {

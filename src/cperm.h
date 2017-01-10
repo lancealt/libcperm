@@ -67,7 +67,8 @@ typedef enum {	PERM_MODE_ERROR = -1,
 
 typedef enum {	PERM_CIPHER_ERROR = -1,
 				PERM_CIPHER_AUTO,			// Automatically select cipher to user (only RC5 is currently implemented)
-				PERM_CIPHER_RC5				// Use the RC5 cipher
+				PERM_CIPHER_RC5,			// Use the RC5 cipher
+				PERM_CIPHER_SPECK			// Use the Speck cipher
 } PermCipher;
 
 struct ccperm_t;
