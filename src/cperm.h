@@ -102,7 +102,7 @@ struct cperm_t* cperm_create(uint32_t range, PermMode m, PermCipher a, uint8_t* 
  */
 void cperm_destroy(struct cperm_t* p);
 
-int cperm_set_key(struct cperm_t* perm, const char* key, uint16_t length);
+int cperm_set_key(struct cperm_t* perm, const unsigned char* key, uint16_t length);
 
 /**
  * @brief Get the next item in the permutation.

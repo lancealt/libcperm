@@ -105,7 +105,7 @@ struct cperm_t* cperm_create(uint32_t range, PermMode m, PermCipher a, uint8_t* 
 	return perm;
 }
 
-int cperm_set_key(struct cperm_t* perm, const char* key, uint16_t length) {
+int cperm_set_key(struct cperm_t* perm, const unsigned char* key, uint16_t length) {
 	if(!perm) { return PERM_ERROR_BAD_HANDLE; }
 
 	if(perm->cipher) {
@@ -144,6 +144,7 @@ int cperm_enc(struct cperm_t* perm, uint32_t pt, uint32_t* ct) {
 }
 
 uint32_t cperm_dec(struct cperm_t* cperm, uint32_t pt) {
+	return 0;
 }
 
 int cperm_get_last_error() {
@@ -155,6 +156,7 @@ int cperm_reset(struct cperm_t* perm) {
 
 	perm->mode->destroy(perm);
 	perm->mode->create(perm);
+	return 1;
 }
 
 uint32_t cperm_get_range(const struct cperm_t* perm) {
