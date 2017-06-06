@@ -21,6 +21,14 @@ Advantages of libcperm
 - Small, compact, pure-C library that will compile anywhere.
 - Permutations can be seeded, allowing repeated generation of the same permutation.
 
+Installation
+------------
+    git clone https://github.com/lancealt/libcperm
+    cd libcperm
+    ./autogen.sh
+    ./configure; make
+    sudo make install
+
 Example
 =======
 Below is a simple C program that creates a permutation with 100 objects and prints out the each of the
