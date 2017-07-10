@@ -15,15 +15,32 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 #include "speck.h"
 
-#define ROR(x, r) ((x >> r) | (x << ((sizeof(SPECK_TYPE) * 8) - r)))
-#define ROL(x, r) ((x << r) | (x >> ((sizeof(SPECK_TYPE) * 8) - r)))
+#if WORDSIZE == 24
+  // rotates for word size n=24 bits
+  #define ROR(x, r) ((x >> r) | (x << (24 - r))&MASK24)&MASK24
+  #define ROL(x, r) ((x << r) | (x >> (24 - r))&MASK24)&MASK24
+#elif WORDSIZE == 48
+  #define ROR(x, r) ((x >> r) | (x << (48 - r))&MASK48)&MASK48
+  #define ROL(x, r) ((x << r) | (x >> (48 - r))&MASK48)&MASK48
+#else
+  #define ROR(x, r) ((x >> r) | (x << ((sizeof(SPECK_TYPE) * 8) - r)))
+  #define ROL(x, r) ((x << r) | (x >> ((sizeof(SPECK_TYPE) * 8) - r)))
+#endif
 
 #ifdef SPECK_32_64
-#define R(x, y, k) (x = ROR(x, 7), x += y, x ^= k, y = ROL(y, 2), y ^= x)
-#define RR(x, y, k) (y ^= x, y = ROR(y, 2), x ^= k, x -= y, x = ROL(x, 7))
+  #define R(x, y, k) (x = ROR(x, 7), x += y, x ^= k, y = ROL(y, 2), y ^= x)
+  #define RR(x, y, k) (y ^= x, y = ROR(y, 2), x ^= k, x -= y, x = ROL(x, 7))
 #else
-#define R(x, y, k) (x = ROR(x, 8), x += y, x ^= k, y = ROL(y, 3), y ^= x)
-#define RR(x, y, k) (y ^= x, y = ROR(y, 3), x ^= k, x -= y, x = ROL(x, 8))
+  #if WORDSIZE == 24
+  #define R(x, y, k) (x = ROR(x, 8), x = (x + y)&MASK24, x ^= k, y = ROL(y, 3), y ^= x)
+  #define RR(x, y, k) (y ^= x, y = ROR(y, 3), x ^= k, x = (x - y)&MASK24, x = ROL(x, 8))
+  #elif WORDSIZE == 48
+  #define R(x, y, k) (x = ROR(x, 8), x = (x + y)&MASK48, x ^= k, y = ROL(y, 3), y ^= x)
+  #define RR(x, y, k) (y ^= x, y = ROR(y, 3), x ^= k, x = (x - y)&MASK48, x = ROL(x, 8))
+  #else
+  #define R(x, y, k) (x = ROR(x, 8), x += y, x ^= k, y = ROL(y, 3), y ^= x)
+  #define RR(x, y, k) (y ^= x, y = ROR(y, 3), x ^= k, x -= y, x = ROL(x, 8))
+  #endif
 #endif
 
 struct speck_data {
@@ -164,10 +181,34 @@ int main(int argc, char** argv)
   uint16_t enc[2] = {0x42f2, 0xa868};
 #endif
 
+#ifdef SPECK_48_72
+  uint32_t key[3] = {0x020100, 0x0a0908, 0x121110};
+  uint32_t plain[2] = {0x6c6172, 0x20796c};
+  uint32_t enc[2] = {0x385adc, 0xc049a5};
+#endif
+
+#ifdef SPECK_48_96
+  uint32_t key[4] = {0x020100, 0x0a0908, 0x121110, 0x1a1918};
+  uint32_t plain[2] = {0x696874, 0x6d2073};
+  uint32_t enc[2] = {0xb6445d, 0x735e10};
+#endif
+
 #ifdef SPECK_64_128
   uint32_t key[4] = {0x03020100, 0x0b0a0908, 0x13121110, 0x1b1a1918};
   uint32_t plain[2] = {0x7475432d, 0x3b726574};
   uint32_t enc[2] = {0x454e028b, 0x8c6fa548};
+#endif
+
+#ifdef SPECK_96_96
+  uint64_t key[2] = {0x050403020100, 0x0d0c0b0a0908};
+  uint64_t plain[2] = {0x656761737520, 0x65776f68202c};
+  uint64_t enc[2] = {0x62bdde8f79aa, 0x9e4d09ab7178};
+#endif
+
+#ifdef SPECK_96_144
+  uint64_t key[3] = {0x050403020100, 0x0d0c0b0a0908, 0x151413121110};
+  uint64_t plain[2] = {0x69202c726576, 0x656d6974206e};
+  uint64_t enc[2] = {0x7ae440252ee6, 0x2bf31072228a};
 #endif
 
 #ifdef SPECK_128_256
